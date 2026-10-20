@@ -1,0 +1,23 @@
+name: Docker Build and Run CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: |
+          docker build -t qr-code-generator-app .
+
+      - name: Test Run Docker Container
+        run: |
+          docker run --rm qr-code-generator-app --url http://www.njit.edu
